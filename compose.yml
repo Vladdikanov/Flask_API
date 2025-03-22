@@ -6,6 +6,11 @@ services:
       - POSTGRES_DB=sprod
       - POSTGRES_PASSWORD=1234
       - POSTGRES_USER=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sprod"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - dbnet
   adminer:
@@ -29,6 +34,8 @@ services:
       - dbnet
     ports:
       - "127.0.0.1:8000:4000"
+    depends_on:
+      - adminer
 networks:
   dbnet:
     driver: bridge
