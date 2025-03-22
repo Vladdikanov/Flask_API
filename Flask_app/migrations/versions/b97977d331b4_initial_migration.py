@@ -66,7 +66,6 @@ def seed_test_data():
                    [{'name': name} for name in categories_products.keys()]
                    )
 
-    # Вставка продуктов
     product_table = table('product',
                           column('id', sa.Integer),
                           column('name', sa.String),
@@ -85,7 +84,6 @@ def seed_test_data():
 
     op.bulk_insert(product_table, products)
 
-    # Генерация продаж
     sale_table = table('sale',
                        column('product_id', sa.Integer),
                        column('quantity', sa.Integer),
@@ -95,9 +93,8 @@ def seed_test_data():
     sales = []
     today = datetime.now().date()
 
-    # Для каждого продукта во всех категориях
     for product_id in range(1, sum(len(v) for v in categories_products.values()) + 1):
-        # Генерируем продажи за последние 6 месяцев
+
         for i in range(0, 181):
             sale_date = today - timedelta(days=i)
             sales.append({

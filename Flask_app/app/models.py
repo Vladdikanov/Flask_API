@@ -30,6 +30,5 @@ class Sale(db.Model):
     id = Column(Integer, primary_key=True)
     product_id = Column(Integer, ForeignKey('product.id'), nullable=False)
     quantity = Column(Integer, nullable=False)
-    discount = Column(Numeric(100,2), nullable=True)
     date = Column(Date, nullable=False)
     product = relationship("Product", back_populates="sales")

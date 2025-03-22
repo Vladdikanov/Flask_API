@@ -117,7 +117,7 @@ def get_top_products():
     t_start = time()
     start_date_str = request.args.get('date_from')
     end_date_str = request.args.get('date_to')
-    limit_str = request.args.get('limit', '10')  # Значение по умолчанию - 10
+    limit_str = request.args.get('limit', '10')
 
     if not start_date_str or not end_date_str:
         return jsonify({"result": {"error": "date_from and date_to are required"}})
