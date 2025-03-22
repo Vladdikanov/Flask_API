@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: psgr
+    environment:
+      - POSTGRES_DB=sprod
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=postgres
+    networks:
+      - dbnet
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - "127.0.0.1:8080:8080"
+    links:
+      - "postgres:db"
+    networks:
+      - dbnet
+    depends_on:
+      - postgres
+  webflask:
+    build: .
+    image: fapi
+    container_name: fapi
+    links:
+      - "postgres:dbps"
+    networks:
+      - dbnet
+    ports:
+      - "127.0.0.1:8000:4000"
+networks:
+  dbnet:
+    driver: bridge
